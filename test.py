@@ -100,7 +100,19 @@ a .+ 3
 
 
 
+#showcase
+print "Hello, World!"; //print("Hello, World!");
+"hello, World!" print; //"Hello, World!".print();
 
+1 :a //int a = 1;
+a + 2; :b //int b = a + 2;
+
+a = 3; //a = 3;
+a =+ 4;; //a = a + 4;
+
+if a == 0 {
+    print "a is zero";
+};
 
 # 베스킨라빈스31
 
