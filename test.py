@@ -80,3 +80,63 @@ Http::post "https://www.google.com" "application/json" Json::serialize [
 Http::post Urls::get "google" Http::post::type::json Json::serialize [
     
 ]
+
+
+
+
+
+
+int a = 4;
+
+4 :a
+
+int b = a + 3;
+
+a .+ 3 :b
+
++ a 3 // Add(a, 3)
+// a.Add(3)
+a .+ 3 
+
+
+
+
+
+# 베스킨라빈스31
+
+["me":name]:me
+["ai":name]:ai
+
+[
+    me
+    ai**4;
+]:players
+
+0:|0..<players##|turn
+0:|0..31|number
+
+{
+    1..Math::clamp 30-number; 1 3;; Random::range; =>
+}:select_random
+
+loop {
+    players#turn; :current_player
+    println "{current_player.name}'s turn!";
+    if current_player === me; {
+        scanln; int.parse; clamp 1 3;
+    };
+    if current_player === ai {
+        select_random;
+    };
+    :move
+    += number;
+    for 1..move; {:i
+        println "{i}";
+    }
+    if number >= 31 {
+        println "{current_player.name} lose";
+        
+    } else: {
+        continue;
+    }
+};
