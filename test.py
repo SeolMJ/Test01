@@ -135,7 +135,7 @@ loop {
     players#turn; :current_player
     println "{current_player.name}'s turn!";
     if current_player === me; {
-        scanln; int.parse; clamp 1 3;
+        scanln; int::parse; clamp 1 3;
     };
     if current_player === ai {
         select_random;
@@ -146,9 +146,39 @@ loop {
         println "{i}";
     }
     if number >= 31 {
-        println "{current_player.name} lose";
-        
+        println "{current_player.name} lose";      
     } else: {
         continue;
     }
 };
+
+# add 3
+{[?:a ?:b ?:c]
+    a+b;+c;=>;
+}:add3
+
+# onecard simulation
+@Diamond
+|@Spade;
+|@Heart;
+|@Clover;
+;:Card::Type
+
+@A
+|Two;
+|Three;
+|Four;
+
+
+{[Card:card]
+    
+}:OneCard::Simulation
+
+#asdf
+Settings::get @NewSetting Int;
+
+@[?]:Setting
+
+{[Setting:setting $:type]
+    ...
+}:Settings::get
