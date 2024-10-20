@@ -158,27 +158,178 @@ loop {
 }:add3
 
 # onecard simulation
-@Diamond
-|@Spade;
-|@Heart;
-|@Clover;
-;:Card::Type
 
-@A
-|Two;
-|Three;
-|Four;
 
+[
+    @|[
+        Diamond
+        Spade
+        Heart
+        Clover
+    ]::Type
+
+    @|[
+        A
+        Two
+        Three
+        Four
+        Five
+        Six
+        Seven
+        Eight
+        Nine
+        Ten
+        J Q K
+        BlackJoker ColorJoker
+    ]::Num
+
+    Type:type
+    Num:num
+]:Card
+
+{[?:a ?:b]
+    a & b; != [];
+}:match
+
+[]:Card|@none:last
+0:stack
 
 {[Card:card]
-    
-}:OneCard::Simulation
+    (last == null=>!!;)
+    card.type != last.type; && card.num != last.num; => {}
+
+    stack 
+}:OneCard.Simulate
+
 
 #asdf
-Settings::get @NewSetting Int;
+Settings.get @NewSetting Int;
 
 @[?]:Setting
 
 {[Setting:setting $:type]
     ...
-}:Settings::get
+}:Settings.get
+
+print("Hello World")
+if(last == null {
+    asdf
+})
+
+############################
+
+[
+    @|[
+        diamond
+        spade
+        heart
+        clover
+    ]::Type
+
+    @|[
+        A
+        Two
+        Three
+        Four
+        Five
+        Six
+        Seven
+        Eight
+        Nine
+        Ten
+        J Q K
+        BlackJoker ColorJoker
+    ]::Num
+
+    Type:type
+    Num:num
+]:Card
+
+{[?:a ?:b]
+    a & b; != [];
+}:match
+
+
+
+[]:Card|@none:last
+0:stack
+
+
+{[Card:card]
+    last==(@none)=>(!!)
+    card.type!=(last.type)&&(card.num!=(last.num))=>>@failed
+    stack!=(0)=>({//need to attack
+        card.num!=(@Two)=>({
+            
+        })
+    })
+}
+
+{
+    {@|{
+        a,
+        two,
+        three,
+        four,
+        five,
+        six,
+        seven,
+        eight,
+        nine,
+        Ten,
+        j,q,k,
+        joker
+    }}:Number
+    
+    {@|{
+        spade,
+        heart,
+        clover,
+        diamond
+    }}:Symbol
+
+    Number.a:a
+    Symbol.diamond:symbol
+}:Card
+
+// 2(<-3)[2]->A(<-5)[3]->A-Spade(<-5)[5]<->Spade-Joker[5]->Heart-Joker[7]
+
+{{Card:card}
+    card.symbol!=[last.symbol]&&[card.number!=[last.number]]=>[!!]
+    last==|(
+        [{@a,?}]&&[card.symbol!=&[{@a,@five,@joker}]],
+        [{@a,@spade}]&&[card.symbol!=[@joker]],
+        [{@two,?}]&&[card.symbol!=&[{@a,@two,@three,@joker}]],
+        [{@joker,@spade}]&&[card!=[{@joker,@heart}]],
+        [{@joker,@heart}]
+    )=>[!!]
+}:check_counter
+
+{?{int}+=[stack]
+}:incr_stack
+
+{->{Card:card}
+    last==[@none]=>[!!]
+    card.symbol!=[last.symbol]&&[card.number!=[last.number]]=>[!!]
+    stack!=[0]=>[{// this player needs to attack.
+        card.number(
+            !=&[{@a, @two, @three, @black_joker, @color_joker}]=>[!!],
+            ==[@a]=>[{
+                card.type==[@spade]=>[]
+            }]
+        )
+        check_counter[card.number]
+        card.number==(
+            [@a]=>[incr_stack 2]
+        )
+    }]
+}
+
+{0,1,2,3,4}==[3]
+
+3==[{0,1,2,3,4}]
+
+a(==[b],==[c],==[d])
+
+a!=&[{b,c,d}]
+a!=|[{b,c,d}]
