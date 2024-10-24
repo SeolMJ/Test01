@@ -305,10 +305,10 @@ if(last == null {
     )=>[!!]
 }:check_counter
 
-{?{int}+=[stack]
+{>-[int]+=[stack]
 }:incr_stack
 
-{->{Card:card}
+{>-{Card:card}
     last==[@none]=>[!!]
     card.symbol!=[last.symbol]&&[card.number!=[last.number]]=>[!!]
     stack!=[0]=>[{// this player needs to attack.
@@ -319,11 +319,65 @@ if(last == null {
             }]
         )
         check_counter[card.number]
-        card.number==(
-            [@a]=>[incr_stack 2]
-        )
+        card==(
+            [@a,@spade]=>[5->],
+            [@a,?]=>[3->],
+            [@two,?]=>[2->],
+            [@joker,@spade]=>[5->],
+            [@joker,@heart]=>[7->]
+        )incr_stack[]
+
+        card==(
+            {@a,@spade}=>{5->},
+            {@a,?}=>{3->},
+            {@two,?}=>{2->},
+            {@joker,@spade}=>{5->},
+            {@joker,@heart}=>{7->}
+        )incr_stack
     }]
 }
+
+[>-[Card.card]
+    last=={
+        [@a,?]=>card.number!={@a;@five;@joker};
+        [@a,@spade]=>card.symbol!=@joker;
+        [@two,?]=>card.symbol!={@a;@two;@three;@joker};
+        [@joker,{@spade;@clover}]=>card!=[@joker,{@spade;@clover}];
+        [@joker,{@heart;@diamond}]=>card!=[@joker,{@heart;@diamond}]
+    }=>!!
+]:counter_move
+
+[>-[Card:card]
+    last==@none=>[!!]
+    card.number==joker{
+        =>[card.symbol,last.symbol]=={
+            [{@spade;@clover},{@heart;@diamond}],
+            [{@heart;@diamond},{@spade;@clover}]
+        }=>!!
+        !>card.symbol!=last.symbol=>card.number!=last.number=>!!
+    }
+    stack!=0=>[
+        last=={
+            [@a,?]=>card.number!={@a;@five;@joker}=>;
+            [@a,@spade]=>card.symbol!=@joker=>;
+            [@two,?]=>card.symbol!={@a;@two;@three;@joker}=>;
+            [@joker,{@spade;@clover}]=>card!=[@joker,{@spade;@clover}]=>;
+            [@joker,{@heart;@diamond}]=>card!=[@joker,{@heart;@diamond}]=>
+        }!!
+
+        card.number=={
+            @a=>card.symbol==@spade{
+                =>5,
+                !>3
+            },
+            @two=>2,
+            @joker=>card.symbol==@spade{
+                =>5,
+                !>7
+            }
+        }+=stack
+    ]
+]:submit_card
 
 {0,1,2,3,4}==[3]
 
