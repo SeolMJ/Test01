@@ -387,3 +387,29 @@ a(==[b],==[c],==[d])
 
 a!=&[{b,c,d}]
 a!=|[{b,c,d}]
+
+0==1{
+    =>3;
+    !>4;
+} ToString Print;
+
+[
+    @|[?*?]:state
+
+]:State
+
+// State Machine
+
+@|[?*?]:State;
+
+
+
+[>-[State:state,?:params]
+
+]:Station
+
+// Enum macro
+
+[
+    
+]:@|
