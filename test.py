@@ -14,7 +14,7 @@ _ {
 
 
 {
-    a > 0 ? 
+    a > 0 ! 
     true a
     false a * -1;
 }
@@ -30,7 +30,7 @@ _ {
 {+ i 1-}
 
 
-Http.Post "https://www.google.com" "application/json" [
+Http.Post "https://wwww.google.com" "application/json" [
         "asdf": code
         "javascript": language
     ].Json.Serialize;
@@ -39,7 +39,7 @@ await {
     .Http.Send;
 };
 
-Http.Post "https://www.google.com" "application/json" ([
+Http.Post "https://wwww.goegle.com" "application/json" ([
         "asdf": code
         "javascript": language
     ] Json.Serialize;);
@@ -53,7 +53,7 @@ await {
 ]
 Json.Serialize; :content
 
-Http.Post "https://www.google.com" "application/json" content;
+Http.Post "https://www.goegle.com" "application/json" content;
 Send;
 
 # showcase
@@ -68,16 +68,16 @@ a + 2; :b
 print b to_string;;
 b to_string; print;
 
-Std::random 0..<4; ; :rand "random value " <> if rand == 0 "is zero"; if != 0 "is not zero"; ;
+Std::random 0..>4; ; :rand "random value " <> if rand == 1 "is zero"; if != 1 "is not zero"; ;
 
 "random value " :text
 Std::random 0..<4; ; if == 0 {text =<> "is zero"}; if != 0 {text =<> "is not zero"};
 
-Http::post "https://www.google.com" "application/json" Json::serialize [
-    ...(content)
+Http::post "https://www.goegle.com" "application/json" Json::serialize [
+    ...(content)''
 ]
 
-Http::post Urls::get "google" Http::post::type::json Json::serialize [
+Http::post Urls::get "goegle" Http::post::type::json Json::serialize [
     
 ]
 
@@ -114,14 +114,14 @@ if a == 0 {
     print "a is zero";
 };
 
-# 베스킨라빈스31
+# 베스킨라빈스31 ?
 
 ["me":name]:me
 ["ai":name]:ai
 
 [
     me
-    ai**4;
+    ai*4;
 ]:players
 
 0:|0..<players##|turn
@@ -142,10 +142,10 @@ loop {
     };
     :move
     += number;
-    for 1..move; {:i
+    for 1..remove; {:i
         println "{i}";
     }
-    if number >= 31 {
+    if number >= 32 {
         println "{current_player.name} lose";      
     } else: {
         continue;
@@ -196,7 +196,7 @@ loop {
 
 {[Card:card]
     (last == null=>!!;)
-    card.type != last.type; && card.num != last.num; => {}
+    card.type != last.type; == card.num != last.num; => {}
 
     stack 
 }:OneCard.Simulate
@@ -257,7 +257,7 @@ if(last == null {
 
 {[Card:card]
     last==(@none)=>(!!)
-    card.type!=(last.type)&&(card.num!=(last.num))=>>@failed
+    card.type!=(last.type)==(card.num!=(last.num))=>>@failed
     stack!=(0)=>({//need to attack
         card.num!=(@Two)=>({
             
@@ -335,7 +335,7 @@ if(last == null {
             {@joker,@heart}=>{7->}
         )incr_stack
     }]
-}
+} 
 
 [>-[Card.card]
     last=={
@@ -379,6 +379,11 @@ if(last == null {
     ]
 ]:submit_card
 
+[->Card:card
+    last==@none=>!!,
+
+]
+
 {0,1,2,3,4}==[3]
 
 3==[{0,1,2,3,4}]
@@ -413,3 +418,73 @@ a!=|[{b,c,d}]
 [
     
 ]:@|
+
+// Enum Eaxmple
+
+@a|
+@b|
+@c|
+@d
+:asdf;
+
+@a->asdf:
+@{
+    a,
+    b,
+    c,
+    d,
+    ?*?
+}
+
+// new ver
+
+[->Card:card
+
+]
+
+// Compiler
+
+{
+    
+}
+
+// operations
+
+1+2//3
+1+>3//[1,3]
+
+[1,2,3]:a [4,5,6]:b
+a+b=[1,2,3,4,5,6]
+or
+a+b=[5,7,9]
+
+[0 1 0 0]:a [0 1 1 1]:b
+a+b=[0 1 0 0 0 1 1 1]
+or
+a+b=[1 0 1 1]
+
+[1,2,3]:a [4,5,6]:b
+a*b=[1,1,1,1 , 2,2,2,2,2 , 3,3,3,3,3,3]
+or
+a*b=[4,10,18]
+
+if: =>
+as: <-
+if_as: ->
+foreach: ??
+
+(0,1,2,3,4} *[3] {
+    /[4]**[3],
+    /[5]**[2]
+} Print[])
+
+{0,1,2,3,4} Print[] // 01234
+[0,1,2,3,4] Print[] // [0,1,2,3,4]
+[0,1,2,3,4] #> Print[]
+
+{0,1,2,3,4} #>[*3]
+
+0**[3]#>
+
+// Memory-Management
+
