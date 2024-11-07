@@ -1,0 +1,27 @@
+//ps14613
+
+console
+    read_line
+    ->[2~300] :n
+,
+-1_000_000~1_000_000 :Coordinate
+,
+0~>n #{ :i
+    console
+        read_line
+        split' '<-[string**2]
+        #{->[-1_000_000~1_000_000 :Coordinate]}<-[?:left++?:right :Line]
+} :lines
+,
+console
+    read_line
+    ->[1~300] :q
+,
+0~>q #{ :i
+    console
+        read_line
+        split' '<-[string**2]
+        #{->[1~n]-1}<-[?:a++?:b :Question]
+} :questions
+,
+...
