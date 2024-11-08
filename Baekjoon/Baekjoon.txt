@@ -1,4 +1,4 @@
-//ps14613
+//ps14588
 
 console
     read_line
@@ -6,22 +6,46 @@ console
 ,
 -1_000_000~1_000_000 :Coordinate
 ,
-0~>n #{ :i
+0~>n #{
     console
         read_line
         split' '<-[string**2]
-        #{->[-1_000_000~1_000_000 :Coordinate]}<-[?:left++?:right :Line]
+        #{->int*2<-[-1_000_000~1_000_000 :Coordinate]}<-[?:left++?:right :Line]
+        //++[.left+.right]:center
 } :lines
 ,
 console
     read_line
     ->[1~300] :q
 ,
-0~>q #{ :i
+0~>q #{
     console
         read_line
         split' '<-[string**2]
         #{->[1~n]-1}<-[?:a++?:b :Question]
 } :questions
 ,
-...
+questions #{
+    //.left min .right :left,
+    //.left max .right :right,
+    @alive**n :stats
+    0<-[-1~299] :distance,
+    left~>right #{ :i
+        0 :total
+        <~>n ##{ :j #stats==@alive=>
+            i#lines.right<[j#lines.left]={
+                @dead :j#stats
+            } !>
+                1+:total
+        }
+        total==0={
+            -1 :distance
+            break
+        }!{
+            1+:distance
+            total==1=>
+                break
+        }
+    }
+    distance->string write console
+}
