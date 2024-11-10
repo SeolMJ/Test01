@@ -1,11 +1,10 @@
-//ps14588
+// bj14588
 
 console
     read_line
     ->[2~300] :n
 ,
--1_000_000~1_000_000 :Coordinate
-,
+\\
 0~>n #{
     console
         read_line
@@ -18,34 +17,168 @@ console
     read_line
     ->[1~300] :q
 ,
-0~>q #{
+0~>q#{
     console
         read_line
         split' '<-[string**2]
         #{->[1~n]-1}<-[?:a++?:b :Question]
 } :questions
 ,
-questions #{
+questions#{
     //.left min .right :left,
     //.left max .right :right,
-    @alive**n :stats
-    0<-[-1~299] :distance,
+    @alive**n:stats
+    0<-[-1~299]:distance,
     left~>right #{ :i
         0 :total
-        <~>n ##{ :j #stats==@alive=>
-            i#lines.right<[j#lines.left]={
-                @dead :j#stats
+        <~>n #{:j#stats==@alive=>
+            i#lines.right<left@j#lines={
+                @dead:j#stats
             } !>
                 1+:total
         }
-        total==0={
-            -1 :distance
+        total==0 ={
+            -1:distance
             break
-        }!{
+        } !{
             1+:distance
             total==1=>
                 break
         }
     }
-    distance->string write console
+    distance->string write_line console
 }
+
+// bj2336 굉장한 학생
+
+console read_line ->(1~500_000) :n
+
+1~3 #{
+    console read_line split' ' <-(string **n) #{->(1~n)}
+} :rank
+
+[0<-(0~3) :amazing]
+[0<-(0~3) **n] :wins
+
+0~n &&([@searching :state]==@searching) #{ :i
+    0 :great_count
+    1~3 #{ :j
+        rank#j #i :student
+        wins#student ==0 =>{
+            1+={amazing}
+        }
+        1+={wins#student}
+        wins#student ==3 =>{
+            1+={great_count}
+        }
+        student
+    }
+    great_count>=1 =>{
+        great_count>=2 =>{
+            great_count-={amazing}
+        }
+        @done={state}
+    }
+}
+
+amazing->string write_line console
+
+
+# bj15964
+
+console read_line split' ' <-(string**2) ##{->(1~100_000)} $[#1 :left,#2 :right]
+a*a -(b*b) write_line console
+
+
+# bj1614
+
+1234 5432 1234 5...
+
+console ${
+    read_line ->(1~5) :finger,
+    read_line ->(1~1_000_000_000) :limit
+}
+
+finger== ${
+    1=>> 8*limit,
+    (2~4)=>> 4*limit +(limit==(2*?) ${
+        =>> finger-1,
+        !>> 5-finger
+    }),
+    5=>> 8*limit +4
+} ->string write_line console
+
+
+# bj15782
+
+console read_line split' ' <-(string**2) ${#0 ->(3~100_000 :t_node) :n, #1 ->(3~500_000 :t_quest) :m}
+1~>n ##{console read_line split' ' <-(string**2) ##{ ->t_node} ${#0 :a,#1 :b}} :nodes,
+console read_line split' ' <-(string**n) ##{ ->(0~10_000 :t_weight)} :weights
+1~4 ##{console read_line split' ' <-(string**(2~3)) :question #1 ==${
+    1=>> question <-(string**2) #1 :x
+    2=>> question <-(string**3) ${#1 :x,#2 :y}
+}} :questions ##{
+    @= $>
+        [int:x]=>> 
+            [weights#x :xor]
+            [@false**n] :children
+            @true={children#x}
+            x~>n ##{ :i
+                children#i ==@true=>>
+                    @true={children#(nodes#i :new_node)}
+                    weights#new_node ^={xor}
+            } xor ->string write_line console
+        ,
+        [int:x,int:y]=>>
+            [weights#x :xor]
+            [@false**n] :children
+            @true={children#x}
+            ##{ :i
+                children#i ==@true=>>
+                    @true={children#(nodes#i :new_node)}
+                    y^={weights#new_node}
+            }
+}
+
+
+# bj20114
+
+console read_line split' ' <-(string**3) ${#0 ->(1~100) :n,#1 ->(1~10) :h,#2 ->(1~10) :w}
+0~>h ##{console read_line <-(char**(n*w))} :note
+0~>(n*2) ##{ :i
+    ['?' :c]
+    0~>h ##{ :j
+        note#j #i :current !='?' =>> current={c}
+    }
+    c
+} write_line console
+
+
+# bj25206
+
+[0 :total_sr]
+[0 :total_score]
+0~>20 ##{
+    console read_line split' ' <-(string**3) @{!=[?,?,'P']=>>} ${
+        #0 :name,
+        #1 == ${
+            '1.0'=>1,
+            '2.0'=>2,
+            '3.0'=>3,
+            '4.0'=>4,
+            '5.0'=>5
+        } <-(1~5) :score @> +={total_score},
+        #2 == ${
+            'F'=>0,
+            'D0'=>2,
+            'D+'=>3,
+            'C0'=>4,
+            'C+'=>5,
+            'B0'=>6,
+            'B+'=>7,
+            'A0'=>8,
+            'A+'=>9
+        } <-(0~9) :rating
+    } @> core*rating +={total_sr}
+}
+total_sr->float*0.5 /(total_score->float) ->string write_line console
