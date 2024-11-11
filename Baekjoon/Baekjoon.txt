@@ -182,3 +182,8 @@ console read_line split' ' <-(string**3) ${#0 ->(1~100) :n,#1 ->(1~10) :h,#2 ->(
     } @> core*rating +={total_sr}
 }
 total_sr->float*0.5 /(total_score->float) ->string write_line console
+
+
+# bj15740
+
+console read_line <-()

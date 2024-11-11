@@ -1,0 +1,11 @@
+<|'TestGame'
+
+open::Application :app
+
+'Init'|>{}
+
+[@true :continue] ##>
+    |>'Update'
+    app.exit_reqested! ={continue}
+
+app close
