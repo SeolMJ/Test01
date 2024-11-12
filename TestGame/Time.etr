@@ -1,0 +1,12 @@
+@Init |>
+
+[
+    float :elapsed,
+    float :delta,
+] :Time
+
+@Update |>
+
+elapsed::Time :last
+now::Time :{elapsed::Time}
+elapsed::Time - elapsed::Time :{delta:Time}
