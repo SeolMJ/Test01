@@ -187,3 +187,10 @@ total_sr->float*0.5 /(total_score->float) ->string write_line console
 # bj15740
 
 console read_line <-()
+
+// bj25206 new
+
+[0 :total_sr]
+[0 :total_score]
+0~>20 ##>
+    console read_line <-[?:a,' ',?:b,' ',?:c] .{!=[?,?,'P']=>>}
