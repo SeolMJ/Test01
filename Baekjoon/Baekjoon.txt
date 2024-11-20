@@ -109,6 +109,21 @@ finger== ${
 } ->string write_line console
 
 
+# bj1614 ver.2
+
+console $>
+    readline ->(1~5) :finger,
+    readline ->(1~1_000_000_000) :limit;
+
+finger== $>
+    1=> 8*limit,
+    (2~4)=> 4*limit +(limit==(2*?)) $>
+        => finger-1,
+        !> 5-finger;
+    5=> 8*limit +4;
+->string writeline console
+
+
 # bj15782
 
 console read_line split' ' <-(string**2) ${#0 ->(3~100_000 :t_node) :n, #1 ->(3~500_000 :t_quest) :m}
@@ -138,6 +153,41 @@ console read_line split' ' <-(string**n) ##{ ->(0~10_000 :t_weight)} :weights
                     @true={children#(nodes#i :new_node)}
                     y^={weights#new_node}
             }
+}
+
+
+# bj15782 ver.2
+
+console readline split' ' <-(string**2) $>
+    #0 ->(3~100_000 :t_node) :n,
+    #1 ->(3~500_000 :t_quest) :m;
+1~>n #> console readline split' ' <-(string**2) #> ->t_node; $> 
+    #0 :a,
+    #1 :b; :nodes;
+console readline split' ' <-(string**n) #> ->(0~10_000 :t_weight);
+...
+
+# bj15782 ver.3
+
+console readline split' ' <-(string**2) ${
+    #0 ->(3~100_000 :t_node) :n,
+    #1 ->(3~500_000 :t_quest) :m
+}
+1~>n #{console readline split' ' <-(string**2) #{->t_node} ${
+        #0 :a,
+        #1 :b
+    } :nodes
+}
+console readline split' ' <-(string**n) #{->(0~10_000 :t_weight)} :weights
+1~4 #{console readline split' ' <-(string**(2~3)) :question #1 == ${
+    1=>{question <-(string**2) #1 :x},
+    2=>{question <-(string**3) ${#1 :x,#2 :y}}
+}} :questions #{
+    == ${
+        [int :x]=>{
+
+        }
+    }
 }
 
 

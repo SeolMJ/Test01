@@ -1,14 +1,12 @@
-@TestGame|>
+@TestGame |>
 
 open::Application :app
 
 <|@Init
 
-[@true :continue] ##>
+{
     <|@Update
-    app.exit_reqested! ={continue}
+    
+} /{app.exit_reqested! =>}
 
 <|@Final
-
-app close
-
