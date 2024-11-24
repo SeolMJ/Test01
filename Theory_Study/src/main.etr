@@ -1,0 +1,12 @@
+@_ |>
+
+[
+    int :age,
+    string :ytlink
+] :YeongGTE
+
+[
+    18 :age //만나이
+    'https://www.youtube.com/channel/UCDwysGLYbGxOsHrLE506R_w' :ytlink
+] <-YeongGTE :YeongGTE1
+

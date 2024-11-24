@@ -2,11 +2,12 @@
 
 open::Application :app
 
-<|@Init
-
-{
-    <|@Update
-    
-} /{app.exit_reqested! =>}
-
-<|@Final
+<|@Init <-({<-{??}??}) {
+    [@+ :exit_requested_last_frame]
+    {
+        <|@Update
+        app.exit_reqested! ||(exit_requested_last_frame!)
+            (app.exit_reqested :exit_requested_last_frame)
+            => $;
+    }
+}
