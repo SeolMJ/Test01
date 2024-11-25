@@ -236,6 +236,18 @@ console read_line split' ' <-(string**3) ${#0 ->(1~100) :n,#1 ->(1~10) :h,#2 ->(
     c
 } write_line console
 
+ver.2
+console readline split' ' <-[->(1~100) :n,->(1~10) :h,->(1~10) :w]
+0~>h #{console readline <-(char**(n*w))} :note
+0~>(n*2) #{:i
+    ['?':c]
+    0~>h #{:j
+        note#j #i :current
+        !='?'=>
+            current:c
+    }
+    c
+} writeline console
 
 # bj25206
 
@@ -277,3 +289,25 @@ console read_line <-()
 [0 :total_score]
 0~>20 ##>
     console read_line <-[?:a,' ',?:b,' ',?:c] .{!=[?,?,'P']=>>}
+
+[0 :total_sr]
+[0 :total_score]
+0~>20 #{
+    console readline <-[:a,:b,:c] ..(!=[?,?,'P']=>) (
+        #0 :name;
+        #1 #0 <-(1~5) :score ..(+:total_score);
+        #2 find_index [
+            'F',
+            ' ',
+            'D0',
+            'D+',
+            'C0',
+            'C+',
+            'B0',
+            'B+',
+            'A0',
+            'A+',
+        ] :rating ..(*core +:total_sr)
+    )
+}
+total_sr * 0.5 / total_score ->string writeline console
