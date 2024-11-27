@@ -1,0 +1,63 @@
+stream -> string // full text (sync)
+
+[0]:a
+
+stream
+    split ' '
+    ..(
+        count 'a' += a;
+    )
+
+stream.
+    filter{>50}
+    filter{%2==0}
+    [## > 0] (
+        => #0;
+        !> 0
+    )
+
+stream
+    filter{>50}
+    filter{%2==0}
+    (## > 0) [
+        => #0;
+        !> 0
+    ]
+
+stream
+    filter { > 50 }
+    filter { % 2 == 0 }
+    (
+        => (## > 0) #0;
+        !> (## > 0) 0
+    )
+
+a == b => #0
+ (       )
+a(==b=>)#0
+
+stream
+    filter { > 50 }
+    filter { % 2 == 0 }
+    (## > 0 [
+        =>) #0;
+        !>) 0
+    ]
+
+stream
+    filter { > 50 }
+    filter { % 2 == 0}
+    (## > 0) [
+        => #0;
+        !> 0
+    ]
+
+stream
+    filter > 50;
+    filter % 2 == 0;
+    ((## > 0)(
+        => #0,
+        !> 0
+    ))..
+
+
