@@ -50,25 +50,27 @@ $game :g ($label_object::obj :object,$string :name,$int :bps) {
     );
 } :label_eval
 
-game:g..(label_object::obj:object,string:name,int:bps) {
-    object <-(?::obj)
-    ===(
+game:g (label_object::obj:object,string:name,int:bps)..{
+    object <-(?::obj) ==(
         code => object func;
-        jump => g.label_manager jump_label(object.label_name);
-        call => g.label_manager call_label(object.label_name);
-        play_channel => g.audio play_channel(object.chan_name, g.path +(object.path));
-        show => g eval_show object name bps;
-        hide => g eval_hide object name bps;
-        play_music =>
-            object.path :(g.now_music)
-            g.audio play_music(g.path +(object.path), object.loop, object.ms);
-        stop_music =>
-            '' :(g.now_music)
-            g.audio stop_music(object.ms);
-        play_video => g eval_play_video object name bps;
-        say => g eval_say object;
-        pause =>
-            g inactive_screen(g.say_screen_name)
-            time sleep(object.time <-seconds)
+        jump => .label_manager jump_label(object.label_name);
+        call => .label_manager call_label(object.label_name);
+        play_channel => .audio play_channel(object.chan_name, g.path +(object.path));
+        show => eval_show object name bps;
+        hide => eval_hide object name bps;
+        play_music =>(
+            object.path :(g.now_music);
+            .audio play_music(g.path +(object.path), object.loop, object.ms);
+        );
+        stop_music =>(
+            '' :(g.now_music);
+            .audio stop_music(object.ms);
+        );
+        play_video => eval_play_video object name bps;
+        say => eval_say object;
+        pause =>(
+            inactive_screen(g.say_screen_name);
+            time sleep(object.time <-seconds);
+        )
     )
 } :label_eval

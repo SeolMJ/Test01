@@ -55,9 +55,24 @@ stream
 stream
     filter > 50;
     filter % 2 == 0;
-    ((## > 0)(
-        => #0,
-        !> 0
-    ))..
+    (## > 0)(=> #0,!> 0)(writeline console)..
 
+stream
+    filter > 50;
+        filter % 2 == 0;
+        (=>(## > 0) #0, !>(## > 0) 0) writeline console
+    .
+        ## > 0 (=> #0, !> 0) writeline console
 
+stream
+    filter{> 50}
+    (filter{% 2 == 0})(## > 0)(=>{#0},!>{0})(writeline console);
+    (## > 0)(=>{#0},!>{0})(writeline console)..
+stream
+    filter{> 50}
+    .filter{% 2 == 0}.##.> 0 .(=>{#0},!>{0}).writeline.console..
+
+stream.
+    filter{>50}.
+    (filter{%2==0).##>0(=>))
+    
