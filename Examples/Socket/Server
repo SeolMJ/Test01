@@ -5,11 +5,10 @@
 }:handle_client
 
 <|@_ {
-    listen::tcp{127.0.0.1:8080} (==@fail=>{!!'failed to connect'})
-    ('Server listening on 127.0.0.1:8080'writeline console)
+    listen::tcp{127.0.0.1:8080} (==@fail=>{!!'failed to connect'})..
+    ('Server listening on 127.0.0.1:8080'writeline console)..
     ##{
-        ==@failed=>{!!'failed to connect'}
-        
+        ==@failed=>{!!'failed to connect'};
         {handle_client}*>
     }
 }

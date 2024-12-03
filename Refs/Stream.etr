@@ -76,3 +76,10 @@ stream.
     filter{>50}.
     (filter{%2==0).##>0(=>))
     
+stream
+    filter{> 50}
+    filter{% 2 == 0}
+    (## > 0(
+        => #0;
+        !> 0
+    ))..

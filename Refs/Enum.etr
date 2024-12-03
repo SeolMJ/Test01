@@ -1,0 +1,10 @@
+'a'|'b'|'c' :abc_enum
+
+"a" console |- ->abc_enum // 'a'
+
+settings.'volume'
+
+100 :(settings.'volume')
+
+settings.'volume' -| console
+
