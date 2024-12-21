@@ -1,0 +1,38 @@
+// bj14588
+
+console readline ->[2~300] :n
+0~>n #{
+    console;readline;split " \";<-string **2; ; #{
+        ->[int **2] <-[-1_000_00~1_000_000 :coordinate]
+    } :[left;right]
+} :lines
+console readline ->[1~300] :q
+0~>q #{
+    console readline split" \" <-[string **2] #{
+        ->[1~n] -1
+    } <-[?:left ,?:right]
+}
+
+
+console readline ->2~300 :n
+0~>n #{
+    console readline split" \" <-string**2 #{
+        ->int**2 <-[-1_000_000~1_000_000 :coordinate]
+    }
+}
+
+console;readline;->2~300;;:n
+0~>n;#{
+    console;readline;split" \";<-string**2;; #{
+        ->int**2;;<- -1_000_000~1_000_000;:coordinate;
+    };:[left,right]
+}
+
+(console)(readline)(->(2~300)):n
+(0~>n)(#{
+    (console)(readline)(split " \")(<-(string**2))(#{
+        (->(int**2))(<-(-1_000_000~1_000_000):coordinate)
+    }):[left,right]
+})
+
+console rea

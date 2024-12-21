@@ -1,0 +1,73 @@
+@_ |>..
+{<| @opening}:opening
+{<| @game}:game
+
+opening :state::app <-(opening | game)
+
+[
+    @opening,
+    @game
+]:scenes
+
+@opening <-(?,@opening|@game) :scene
+[@+] :quit
+
+loop[] #{
+    <|scene
+    quit !> [@+,]
+}
+
+main_in::implicit (sub_in::explicit) func (sub_out::explicit) main_out::implicit
+
+int (int:ia,int:ib,int:ic) {
+    
+} <-int
+
+{ <-(int,int:ia,int:ib,int:ic)
+
+}
+
+loop #{
+    
+}
+
+{ <-? | @_
+} :awaitable
+
+{}[] <-func
+
+a==[b](=>[{
+    "yes\" print
+}];
+!>[{
+    "no\" print
+}]
+)
+
+a==[b](
+    =>("yes\"print);
+    !>("no\"print)
+)
+
+a==b(
+    =>{"yes\"print};
+    !>{"no\"print}
+)
+
+{
+    
+} :+
+
+{ <-(bool, {??})
+
+} :=>
+
+asdf download"asdf.rar" (==@failed=>!!;)
+
+a==(b;c;d)=>3 //
+//union?
+(a,b,c)${==} -> a==b==c
+a,b,c${==}
+
+...compute->string,b,c,d${==}=>good
+
