@@ -1,7 +1,6 @@
-[tcp::streams]:stream{
-    |- <-utf8_lossy ->utf8 ++' :Request' writeline console
-    'Hello, Client' <-utf8 ->utf8_lossy -|stream
-        (==@fail=>{!!'failed to write the response!'})
+? <-tcp::streams {
+    >>- <-utf8_lossy ->utf8 ++' :Request' ->>console
+    'Hello, Client' <-utf8_lossy ->>stream
 }:handle_client
 
 <|@_ {

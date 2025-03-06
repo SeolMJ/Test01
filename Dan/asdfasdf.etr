@@ -1,0 +1,96 @@
+?<-i32,Prefix {
+    (
+        ==(0x66|0x67)=> 
+            PREFIX_SIZE;
+        ==0x9b=>
+            PREFIX_WAIT;
+        ==0xf0=>
+            PREFIX_LOCK;
+        ==(0xf2|0xf3)=>
+            PREFIX_REP;
+        ==(0x26|0x2e|
+           0x36|0x3e|
+           0x64|0x65)=>
+            PREFIX_SEG;
+        &&0xf0==0x40=>
+            PREFIX_REX;
+        ==0xd5=>
+            PREFIX_REX2;
+        ==0xc5=>
+            PREFIX_VEX2;
+        ==0xc4=>
+            PREFIX_VEX3;
+        ==0x64=>
+            PREFIX_EVEX;
+    )(
+        ==[]=>
+            PREFIX_NUL;
+    )
+} :-> <-Prefix
+
+0xff:code ->Prefix print // PREFIX_NUL
+
+{i32->Prefix}{
+    
+}
+
+
+
+// A + B
+
+console |- ="\[=int:a] \[=int:b]\" a + b -| console
+
+0=int :a
+
+@+ || @- :bit
+[bit :sign, bit ** 7]
+
+[
+    bit :sign;
+    bit ** 7 :scalar
+] :sbyte
+
+[ bit       :sign
+; bit ** 7  :scalar
+]           :sbyte
+
+bit :sign, [bit ** 7] :sbyte
+
+?=(1~?) :n {
+    sign, [bit **(n - 1)]
+} :sint
+
+?=(1~?) :n {
+    bit ** n
+} :uint
+
+?=0 {0} :uint
+
+[  {=(1~?):n bit**n}
+|| {=0}
+] :uint
+
+{=(0~?) :n
+    (
+        ==0=> 0;
+        !=0=> bit ** n
+    )
+} :uint
+
+0=(32 uint) :n
+
+a (=[0~1])
+
+a (=[0~?] :b  ; _) 
+
+a==b (=@+ ; =@-) 
+
+30=()
+(=[0~30]
+
+)
+
+{=(0~?) :n (
+    =0;
+    bit**n
+)} :uint
